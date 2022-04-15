@@ -1,0 +1,60 @@
+﻿Homework due to 11-02-2022
+
+Task 1
+select
+	t4.name, t3.total_amount
+from (select 
+		 t1.passenger_id, sum(t2.price) as total_amount
+	 from fly_mapping t1
+	 left join flying t2
+	 on t1.flying_id = t2.id
+	 group by t1.passenger_id) t3
+left join passengers t4
+on t3.passenger_id = t4.id;
+
+Task 2
+select
+	t3.age_group, round(avg(t2.flight_time), 2) as avg_flight_time
+from fly_mapping t1
+inner join flying t2
+on t1.flying_id = t2.id
+inner join passengers t3
+on t1.passenger_id = t3.id
+group by t3.age_group;
+
+Task 3
+create view flight_count_by_passenger as
+	select
+		passenger_id, count(id) as cnt
+	from fly_mapping
+	group by passenger_id;
+
+select
+	t2.name, t1.cnt
+from flight_count_by_passenger t1
+left join passengers t2
+on t1.passenger_id = t2.id
+where t1.cnt = (select max(cnt) from flight_count_by_passenger);
+
+Task 4
+select
+	t2.name, t1.cnt
+from flight_count_by_passenger t1
+left join passengers t2
+on t1.passenger_id = t2.id
+where t1.cnt > (select avg(cnt) from flight_count_by_passenger);
+
+Task 5
+create view arrival_by_city as
+	select 
+		 t2.point_to, count(t1.id) as cnt
+	 from fly_mapping t1
+	 left join flying t2
+	 on t1.flying_id = t2.id
+	 group by t2.point_to;
+
+select 
+	 *
+from arrival_by_city
+where cnt = (select max(cnt) from arrival_by_city);
+	

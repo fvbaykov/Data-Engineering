@@ -1,0 +1,63 @@
+Homework due to February 04, 2022
+Task 1
+Select model, speed, hd from PC where price < 500;
+
+Task 2
+Select distinct maker from Product where type = 'Printer';
+
+Task 3
+Select model, ram, screen from Laptop where price > 1000;
+
+Task 4
+Select * from Printer where color = 'y';
+
+Task 5
+Select model, speed, hd from PC where cd in ('12x', '24x') and price < 600;
+
+Task 6
+Select distinct Product.maker, Laptop.speed
+from Laptop inner join Product on Laptop.model = Product.model and Laptop.hd >= 10;
+
+Task 7
+Select PC.model, PC.price
+from Product inner join PC on Product.model = PC.model
+where Product.maker = 'B' 
+union 
+Select Laptop.model, Laptop.price
+from Product inner join Laptop on Product.model = Laptop.model
+where Product.maker = 'B' 
+union 
+Select Printer.model, Printer.price
+from Product inner join Printer on Product.model = Printer.model
+where Product.maker = 'B';
+
+Task 8
+Select distinct maker from Product where type = 'PC'
+except
+Select distinct maker from Product where type = 'Laptop';
+
+Task 9
+Select distinct Product.maker 
+from PC left join Product on PC.model = Product.model 
+where speed >= 450;
+
+Task 14
+Select Ships.class, Ships.name, Classes.country
+from Ships inner join Classes on Ships.class = Classes.class 
+and Classes.numGuns >=10;
+
+Task 16
+Select distinct t1.model, t2.model, t1.speed, t2.ram
+from PC as t1, PC as t2 where t1.speed = t2.speed and t1.ram = t2.ram and t1.model > t2.model;
+
+Task 29
+Select Income_o.point, Income_o.date, Income_o.inc, Outcome_o.out
+from Income_o left join Outcome_o on Income_o.point = Outcome_o.point and Income_o.date = Outcome_o.date
+union
+Select Outcome_o.point, Outcome_o.date, Income_o.inc, Outcome_o.out
+from Outcome_o left join Income_o on Outcome_o.point = Income_o.point and Outcome_o.date = Income_o.date;
+
+Task 34
+Select Ships.name
+from Ships inner join Classes on Ships.class = Classes.class 
+where Classes.displacement > 35000 and Classes.type = 'bb' and Ships.launched is not null and Ships.launched >= 1922; 
